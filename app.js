@@ -14,7 +14,7 @@ app.get('/recipients',(req,res)=>{
     .then(resolve=>{res.json(resolve.body)}) 
 })
 app.get('/recipient',(req,res)=>{
-    sendgrid.fetch(`https://api.sendgrid.com/v3/contactdb/recipients/${req.body.id}`)
+    sendgrid.fetch(`https://api.sendgrid.com/v3/contactdb/recipients/${req.headers.id}`)
     .then((resolve,reject)=>{ res.json(resolve.body)
         // console.log(req.headers.id)
     })     
