@@ -147,20 +147,21 @@ var request = require("request");
 
 // UPDATING A CONTACT
 // var options = { method: 'PATCH',
-//   url: 'https://api.sendgrid.com/v3/contactdb/recipients?id=am9obndpY2tAZ21haWwuY29t',
+//   url: `https://api.sendgrid.com/v3/contactdb/recipients?id=YmFpbHllcmNAb3V0bG9vay5jb20=`,
 //   headers: 
 //    { 'content-type': 'application/json',
 //      authorization: `Bearer ${process.env.API_KEY}` },
 //   body: 
-//    [ { email: 'johnwick@gmail.com',
-//        last_name: 'john',
-//        first_name: 'bond' } ],
+//    [ { email: 'bailerc@mailer.com',
+//        last_name: 'bailey',
+//        first_name: 'john' } ],
 //        json: true };
-
+    
 //   request(options, function (error, response, body) {
 //          if (error) throw new Error(error);
 //          console.log(body);
 // });
+
 
 // DELETING CONTACT
 

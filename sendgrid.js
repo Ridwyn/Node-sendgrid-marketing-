@@ -32,7 +32,8 @@ module.exports={
         var options = { method: 'GET',
         url:url,
         headers: { authorization: `Bearer ${process.env.API_KEY}` },
-        body: '{}' };
+        body: '{}' ,
+    json:true};
         return new Promise(function(resolve, reject) {
          request(options, function (error, response, body) {
             if (error) {
@@ -84,7 +85,8 @@ module.exports={
         var options = { method: 'DELETE',
         url: url,
         headers: { authorization: `Bearer ${process.env.API_KEY}`},
-        body: 'null' };
+        body: 'null' ,
+    json:true};
         return new Promise(function(resolve, reject) {
          request(options, function (error, response, body) {
             if (error) {
