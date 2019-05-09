@@ -14,14 +14,14 @@ app.get('/recipients',(req,res)=>{
     .then(resolve=>{res.json(resolve.body)}) 
 })
 app.get('/recipient',(req,res)=>{
-    sendgrid.fetch(`https://api.sendgrid.com/v3/contactdb/recipients/${req.headers.id}`)
+    sendgrid.fetch(`https://api.sendgrid.com/v3/contactdb/recipients/${req.body.recipient_id}`)
     .then((resolve,reject)=>{ res.json(resolve.body)
         // console.log(req.headers.id)
     })     
 })
 // GET LIST RECIPIENT BELONG TO
 app.get('/recipient-belong-to',(req,res)=>{
-    sendgrid.fetch(`https://api.sendgrid.com/v3/contactdb/recipients/${req.headers.id}/lists`)
+    sendgrid.fetch(`https://api.sendgrid.com/v3/contactdb/recipients/${req.body.recipient_id}/lists`)
     .then(resolve=>{ res.json(resolve)
         // console.log(req.query.id)
     }) 
@@ -32,14 +32,14 @@ app.get('/lists',(req,res)=>{
     sendgrid.fetch('https://api.sendgrid.com/v3/contactdb/lists').then(resolve=>{ res.json(resolve.body)})
 })
 app.get('/list',(req,res)=>{
-    sendgrid.fetch(`https://api.sendgrid.com/v3/contactdb/lists/${req.headers.id}`)
+    sendgrid.fetch(`https://api.sendgrid.com/v3/contactdb/lists/${req.body.list_id}`)
     .then(resolve=>{ res.json(resolve.body)
         console.log(req.query.id)
     }) 
 })
 //Get all recipients in a list
 app.get('/list-recipients',(req,res)=>{
-    sendgrid.fetch(`https://api.sendgrid.com/v3/contactdb/lists/${req.headers.id}/recipients`)
+    sendgrid.fetch(`https://api.sendgrid.com/v3/contactdb/lists/${req.body.recipient_id}/recipients`)
     .then(resolve=>{ res.json(resolve.body)
         console.log(req.query.id)
     }) 
@@ -60,11 +60,11 @@ app.post('/create-recipient', (req, res) => {
         req.body.forEach(contact => {
             contacts.push({email:contact.email,first_name:contact.first_name,last_name:contact.last_name})
         });
-         sendgrid.add('https://api.sendgrid.com/v3/contactdb/recipients',contacts).then(resolve=>{res.send(resolve.statusMessage),contacts=[]})
+         sendgrid.add('https://api.sendgrid.com/v3/contactdb/recipients',contacts).then(resolve=>{res.send(resolve.body),contacts=[]})
  
     }else{
         contacts.push({email:req.body.email,first_name:req.body.first_name,last_name:req.body.last_name})
-        sendgrid.add('https://api.sendgrid.com/v3/contactdb/recipients',contacts).then(resolve=>{res.send(resolve.statusMessage),contacts=[]})
+        sendgrid.add('https://api.sendgrid.com/v3/contactdb/recipients',contacts).then(resolve=>{res.send(resolve.body),contacts=[]})
     }   
 })
 
@@ -77,11 +77,11 @@ app.post('/add-to-list', (req, res) => {
         req.body.forEach(recipient => {
             contactsId.push(recipient.id,)
         });
-        sendgrid.add(`https://api.sendgrid.com/v3/contactdb/lists/${req.headers.id}/recipients`,contactsId).then(resolve=>{res.send(resolve.statusMessage), contactsId=[]})
+        sendgrid.add(`https://api.sendgrid.com/v3/contactdb/lists/${req.body.list_id}/recipients`,contactsId).then(resolve=>{res.send(resolve.statusMessage), contactsId=[]})
  
     }else{
         contactsId.push(req.body.id)
-        sendgrid.add(`https://api.sendgrid.com/v3/contactdb/lists/${req.headers.id}/recipients`,contactsId).then(resolve=>{res.send(resolve.statusMessage ),contactsId=[]})
+        sendgrid.add(`https://api.sendgrid.com/v3/contactdb/lists/${req.body.list_id}/recipients`,contactsId).then(resolve=>{res.send(resolve.statusMessage ),contactsId=[]})
     }    
 })
 
@@ -97,7 +97,7 @@ app.delete('/remove-from-list',(req,res)=>{
 let recipientUpdate= []
 app.put('/update-recipient', (req, res) => { 
         recipientUpdate.push({email:req.body.email,first_name:req.body.first_name,last_name:req.body.last_name})
-        sendgrid.update(`https://api.sendgrid.com/v3/contactdb/recipients?id=${req.headers.id}`,recipientUpdate).then(resolve=>{res.send(resolve.statusMessage)})
+        sendgrid.update(`https://api.sendgrid.com/v3/contactdb/recipients?id=${req.body.recipient_id}`,recipientUpdate).then(resolve=>{res.status(resolve.statusCode).send(resolve.statusMessage)})
    
 })
 
@@ -106,7 +106,7 @@ app.put('/update-recipient', (req, res) => {
 
 // DELETING A RECIPIENT
 app.delete('/delete-recipient', (req, res) => {   
-    sendgrid.deleting(`https://api.sendgrid.com/v3/contactdb/recipients/${req.headers.id}`)
+    sendgrid.deleting(`https://api.sendgrid.com/v3/contactdb/recipients/${req.body.recipient_id}`)
     .then(resolve=>{res.json(respone.statusCode,resolve.statusMessage)})
 })
 

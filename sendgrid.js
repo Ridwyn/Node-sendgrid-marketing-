@@ -8,12 +8,13 @@ let body=
     first_name: 'john' } ]
 
 let up= 'https://api.sendgrid.com/v3/contactdb/recipients/YnJhZGZvc3RlckBnbWFpbC5jb20=';
+let list= 'https://api.sendgrid.com/v3/contactdb/recipients';
 
-function deleting(url){ 
-    var options = { method: 'DELETE',
-    url: url,
-    headers: { authorization: `Bearer ${process.env.API_KEY}`},
-    body: 'null' };
+function getList(url){ 
+    var options = { method: 'GET',
+    url:url,
+    headers: { authorization: `Bearer ${process.env.API_KEY}` },
+    body: '{}' };
     return new Promise(function(resolve, reject) {
      request(options, function (error, response, body) {
         if (error) {
@@ -24,7 +25,7 @@ function deleting(url){
       });
     })
 }
-//  deleting(up).then(resolve=>{console.log(resolve)})
+//   getList(list).then(resolve=>{console.log(resolve)})
 
 module.exports={
     fetch:function getList(url){ 
