@@ -94,10 +94,11 @@ app.delete('/remove-from-list',(req,res)=>{
 
 
 // UPDATING A CONTACT
-let recipientUpdate= []
+
 app.put('/update-recipient', (req, res) => { 
+    let recipientUpdate= []
         recipientUpdate.push({email:req.body.email,first_name:req.body.first_name,last_name:req.body.last_name})
-        sendgrid.update(`https://api.sendgrid.com/v3/contactdb/recipients?id=${req.headers.id}`,recipientUpdate).then(resolve=>{res.status(resolve.statusCode).send(resolve.statusMessage)})
+        sendgrid.update(`https://api.sendgrid.com/v3/contactdb/recipients?id=${req.headers.id}`,recipientUpdate).then(resolve=>{res.status(resolve.statusCode).send(resolve.statusMessage, recipientUpdate=[])})
    
 })
 
@@ -107,7 +108,7 @@ app.put('/update-recipient', (req, res) => {
 // DELETING A RECIPIENT
 app.delete('/delete-recipient', (req, res) => {   
     sendgrid.deleting(`https://api.sendgrid.com/v3/contactdb/recipients/${req.headers.id}`)
-    .then(resolve=>{res.json(respone.statusCode,resolve.statusMessage)})
+    .then(resolve=>{res.json(respone.body)})
 })
 
 
