@@ -44,7 +44,7 @@ module.exports={
           });
         })
     },
-    add:function addlist(url,body){
+    add:function addlist(url,body,qs){
         var options = { method: 'POST',
          url: url,
         headers: 
@@ -52,7 +52,6 @@ module.exports={
             authorization: `Bearer ${process.env.API_KEY}` },
         body: body,
         json: true };
-    
         return new Promise(function(resolve, reject) { 
             request(options, function (error, response, body) {
             if (error) {

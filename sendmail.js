@@ -177,3 +177,72 @@ var request = require("request");
 
 //   console.log( response.statusCode,response.statusMessage);
 // });
+
+// GETTING ALL SENDER IDENTITIES
+// var options = { method: 'GET',
+//   url: 'https://api.sendgrid.com/v3/senders',
+//   headers: { authorization: `Bearer ${process.env.API_KEY}` },
+//   body: '{}' };
+
+// request(options, function (error, response, body) {
+//   if (error) throw new Error(error);
+
+//   console.log(body);
+// })
+
+// CREATING A CAMPAIGN
+// var options = { method: 'POST',
+//   url: 'https://api.sendgrid.com/v3/campaigns',
+//   headers: 
+//    { 'content-type': 'application/json',
+//      authorization: `Bearer ${process.env.API_KEY}` },
+//   body: 
+//    { title: 'March Newsletter',
+//      subject: 'New Products for Spring!',
+//      sender_id: 445951,
+//      list_ids: [ 8004287 ],
+//      segment_ids: [  ],
+//      categories: [ 'spring line' ],
+//      suppression_group_id:9264,
+//      custom_unsubscribe_url: '',
+//      ip_pool: '',
+//      html_content: `<html><head><title>Testing compaigns on sendgrd</title></head><body>
+//      <h2>Testing <h2>
+//      <p>Sending from send grid maekrting compaigns</p><a href=[Unsubcribe]></a></body></html>`,
+//      plain_content: 'Testing marketing compaign!' },
+//   json: true };
+
+// request(options, function (error, response, body) {
+//   if (error) throw new Error(error);
+
+//   console.log(body);
+// });
+
+// GETTING ALL COMPAIGNS
+// var options = { method: 'GET',
+//   url: 'https://api.sendgrid.com/v3/campaigns',
+//   qs: { offset: '0', limit: '10' },
+//   headers: { authorization: `Bearer ${process.env.API_KEY}` },
+//   body: '{}' };
+
+// request(options, function (error, response, body) {
+//   if (error) throw new Error(error);
+
+//   console.log(body);
+// });
+
+
+
+// SENDING A COMPAING
+// var request = require("request");
+
+// var options = { method: 'POST',
+//   url: 'https://api.sendgrid.com/v3/campaigns/5738787/schedules/now',
+//   headers: { authorization: `Bearer ${process.env.API_KEY}` },
+//   body: 'null' };
+
+// request(options, function (error, response, body) {
+//   if (error) throw new Error(error);
+
+//   console.log(body);
+// });

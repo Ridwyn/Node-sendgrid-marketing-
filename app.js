@@ -91,8 +91,6 @@ app.delete('/remove-from-list',(req,res)=>{
     .then(resolve=>{res.send(resolve.body)})
 })
 
-
-
 // UPDATING A CONTACT
 
 app.patch('/update-recipient', (req, res) => { 
@@ -102,14 +100,64 @@ app.patch('/update-recipient', (req, res) => {
    
 })
 
-
-
-
 // DELETING A RECIPIENT
 app.delete('/delete-recipient', (req, res) => {   
     sendgrid.deleting(`https://api.sendgrid.com/v3/contactdb/recipients/${req.headers.id}`)
     .then(resolve=>{res.send(resolve.body)})
 })
 
+// RETRIEVE ALL COMPAIGNS
+app.get('/compaigns', (req, res) => {   
+    sendgrid.fetch(`https://api.sendgrid.com/v3/campaigns`)
+    .then(resolve=>{res.send(resolve.body)})
+})
+// RETRIEVE S INGLE COMPAIGN
+app.get('/compaign', (req, res) => { 
+    sendgrid.fetch(`https://api.sendgrid.com/v3/campaigns/${parseInt(req.headers.compaign_id)}`)
+    .then(resolve=>{res.send(resolve.body)})
+})
+
+// CREATING COMPAINGS
+app.post('/create-compaign', (req, res) => {   
+    let body={
+        title: `${req.body.title}`,
+        subject:`${req.body.subject}`,
+        sender_id: `${parseInt(req.body.sender_id)}`,
+        list_ids: [parseInt(req.body.list_ids)],
+        segment_ids: [  ],
+        categories: [req.body.categories]||'No category added',
+        suppression_group_id:9264,
+        custom_unsubscribe_url: '',
+        ip_pool: '',
+        html_content: `<html><head><title></title></head><body>
+        <h2>${req.body.emailBody} <h2>
+        <p></p><a href="[unsubscribe]">Click here to unsubscribe</a>
+        </body></html>`,
+        plain_content: `${req.body.emailBody}<p><a href="[unsubscribe]">Click here to unsubscribe</a>
+        ` 
+    }
+        if(req.body.title!==''||req.body.subject!==''||req.body.emailBody!==''){
+            sendgrid.add(`https://api.sendgrid.com/v3/campaigns`,body)
+            .then(resolve=>{res.send(resolve.body), body={}})
+        }
+})
+
+// DELETING A COMPAIGN
+app.delete('/delete-compaign', (req, res) => {   
+    sendgrid.deleting(`https://api.sendgrid.com/v3/campaigns/${req.headers.compaign_id}`)
+    .then(resolve=>{res.send(resolve.body)})
+})
+
+// SEND A COMPAIGN
+app.post('/send-compaign', (req, res) => { 
+    sendgrid.add(`https://api.sendgrid.com/v3/campaigns/${parseInt(req.headers.compaign_id)}/schedules/now`)
+    .then(resolve=>{res.send(resolve.body)})
+})
+
+
+
+
+
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+
