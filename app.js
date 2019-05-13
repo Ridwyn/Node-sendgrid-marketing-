@@ -3,6 +3,8 @@ const sendgrid = require('./sendgrid.js');
 const bodyParser = require('body-parser');
 const app = express()
 const cors = require('cors')
+
+
 app.use(cors())
 app.use(bodyParser.json())
 const port = process.env.PORT ||3000
@@ -16,14 +18,12 @@ app.get('/recipients',(req,res)=>{
 app.get('/recipient',(req,res)=>{
     sendgrid.fetch(`https://api.sendgrid.com/v3/contactdb/recipients/${req.headers.id}`)
     .then((resolve,reject)=>{ res.json(resolve.body)
-        // console.log(req.headers.id)
     })     
 })
 // GET LIST RECIPIENT BELONG TO
 app.get('/recipient-belong-to',(req,res)=>{
     sendgrid.fetch(`https://api.sendgrid.com/v3/contactdb/recipients/${req.headers.id}/lists`)
     .then(resolve=>{ res.json(resolve)
-        // console.log(req.query.id)
     }) 
 })
 
@@ -34,14 +34,12 @@ app.get('/lists',(req,res)=>{
 app.get('/list',(req,res)=>{
     sendgrid.fetch(`https://api.sendgrid.com/v3/contactdb/lists/${req.headers.id}`)
     .then(resolve=>{ res.json(resolve.body)
-        console.log(req.query.id)
     }) 
 })
 //Get all recipients in a list
 app.get('/list-recipients',(req,res)=>{
     sendgrid.fetch(`https://api.sendgrid.com/v3/contactdb/lists/${req.headers.id}/recipients`)
     .then(resolve=>{ res.json(resolve.body)
-        console.log(req.query.id)
     }) 
 })
 
